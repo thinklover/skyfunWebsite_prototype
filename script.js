@@ -488,17 +488,20 @@ function updateIrrMatrix() {
       irrRate = (((netForIrr * (leaseMon - waitMon)) / startCost) - 1) / leaseYear;
     }
 
-    const invest = startCost > 0 && irrRate >= SUGGEST_IRR && paybackYr <= SUGGEST_PAYBACK;
-    if (invest) score += 15;
-
     cell.querySelector('.irr-payback').textContent =
       paybackYr === 0 ? '0 年' : paybackYr.toFixed(2) + ' 年';
     cell.querySelector('.irr-rate').textContent =
       isFinite(irrRate) ? (irrRate * 100).toFixed(1) + '%' : '—';
+
+    const domPayback = parseFloat(cell.querySelector('.irr-payback').textContent);
+    const domIrr = parseFloat(cell.querySelector('.irr-rate').textContent);
+    const invest = domPayback > 0 && domPayback <= SUGGEST_PAYBACK && domIrr >= SUGGEST_IRR * 100;
+    if (invest) score += 15;
+
     const badge = cell.querySelector('.irr-badge');
     if (badge) {
       badge.textContent = invest ? '是' : '否';
-      badge.className = 'badge mt-1 ' + (invest ? 'bg-success' : 'bg-secondary');
+      badge.className = 'badge irr-badge mt-1 ' + (invest ? 'bg-success' : 'bg-secondary');
     }
   });
 
