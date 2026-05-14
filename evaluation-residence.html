@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>星鴻包租代管系統 - 新增整層住宅評估</title>
+
+<!-- Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700,900">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0">
+
+<!-- Bootstrap 5 -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome 6 -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<!-- Material Dashboard 3 (Creative Tim, CDN via jsdelivr) -->
+<link href="https://cdn.jsdelivr.net/gh/creativetimofficial/material-dashboard@master/assets/css/material-dashboard.min.css" rel="stylesheet">
+
+<!-- Select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+
+<!-- ============ Sidebar ============ -->
+<aside class="sidenav navbar navbar-vertical navbar-expand-xs border-radius-lg fixed-start ms-2 bg-white my-2" id="sidenav-main">
+  <div class="sidenav-header">
+    <a class="navbar-brand px-4 py-3 m-0" href="#">
+      <div class="d-flex flex-column align-items-center">
+        <div class="brand-logo-box">
+          <span class="brand-sky">SKY</span><span class="brand-fun">FUN</span>
+        </div>
+        <span class="text-dark mt-2 fw-bold">星鴻包租代管系統</span>
+      </div>
+    </a>
+  </div>
+  <hr class="horizontal dark mt-0 mb-2">
+  <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link text-dark" href="#">
+          <i class="material-symbols-rounded opacity-5 m-1">dashboard</i>
+          <span class="nav-link-text ms-1">首頁</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#AccountSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">person_apron</i>
+          <span class="nav-link-text ms-1">員工資料管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="AccountSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">search</i><span class="nav-link-text ms-1">員工資料查詢</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">person_add</i><span class="nav-link-text ms-1">員工資料新增</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#landlordSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">person_add</i>
+          <span class="nav-link-text ms-1">房東資料管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="landlordSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">search</i><span class="nav-link-text ms-1">房東資料查詢</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">person_add</i><span class="nav-link-text ms-1">房東資料新增</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#tenantSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">groups</i>
+          <span class="nav-link-text ms-1">房客資料管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="tenantSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">search</i><span class="nav-link-text ms-1">房客資料查詢</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">group_add</i><span class="nav-link-text ms-1">房客資料新增</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark active-parent" data-bs-toggle="collapse" href="#objectSubmenu" aria-expanded="true">
+          <i class="material-symbols-rounded opacity-5 m-1">home</i>
+          <span class="nav-link-text ms-1">物件資料管理</span>
+        </a>
+        <ul class="collapse list-unstyled show" id="objectSubmenu">
+          <li><a class="nav-link text-dark ps-4 active" href="index.html"><i class="material-symbols-rounded opacity-5 m-1">balance</i><span class="nav-link-text ms-1">物件投資評估</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">search</i><span class="nav-link-text ms-1">物件資料查詢</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">add_business</i><span class="nav-link-text ms-1">物件資料新增</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#expensesSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">receipt</i>
+          <span class="nav-link-text ms-1">補助管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="expensesSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">search</i><span class="nav-link-text ms-1">補助資料查詢</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">payments</i><span class="nav-link-text ms-1">補助申請</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#contratSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">handshake</i>
+          <span class="nav-link-text ms-1">媒合管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="contratSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">feature_search</i><span class="nav-link-text ms-1">契約資料查詢</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">contract</i><span class="nav-link-text ms-1">契約資料新增</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">update</i><span class="nav-link-text ms-1">續約明細管理</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">search</i><span class="nav-link-text ms-1">催收查詢</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#salesSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">trending_up</i>
+          <span class="nav-link-text ms-1">業務管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="salesSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">person_search</i><span class="nav-link-text ms-1">個人業績查詢</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#adminSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">policy</i>
+          <span class="nav-link-text ms-1">行政管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="adminSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">content_paste_search</i><span class="nav-link-text ms-1">物件審核</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">content_paste_search</i><span class="nav-link-text ms-1">合約審核</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">receipt_long</i><span class="nav-link-text ms-1">補助審核</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">manage_accounts</i><span class="nav-link-text ms-1">契約代管人員變更</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">receipt_long</i><span class="nav-link-text ms-1">實價登錄查詢</span></a></li>
+          <li>
+            <a class="nav-link text-dark ps-4" data-bs-toggle="collapse" href="#settlementSubmenu" aria-expanded="false"><i class="material-symbols-rounded opacity-5 m-1">list_alt</i><span class="nav-link-text ms-1">清冊製作</span></a>
+            <ul class="collapse list-unstyled" id="settlementSubmenu">
+              <li><a class="nav-link text-dark ps-5" href="#"><i class="material-symbols-rounded opacity-5 m-1">list_alt</i><span class="nav-link-text ms-1">清冊04<br>出租人補助</span></a></li>
+              <li><a class="nav-link text-dark ps-5" href="#"><i class="material-symbols-rounded opacity-5 m-1">list_alt</i><span class="nav-link-text ms-1">清冊07<br>承租人補助</span></a></li>
+              <li><a class="nav-link text-dark ps-5" href="#"><i class="material-symbols-rounded opacity-5 m-1">list_alt</i><span class="nav-link-text ms-1">清冊09<br>業者服務補助</span></a></li>
+            </ul>
+          </li>
+          <li>
+            <a class="nav-link text-dark ps-4" data-bs-toggle="collapse" href="#bonusSubmenu" aria-expanded="false"><i class="material-symbols-rounded opacity-5 m-1">paid</i><span class="nav-link-text ms-1">獎金管理</span></a>
+            <ul class="collapse list-unstyled" id="bonusSubmenu">
+              <li><a class="nav-link text-dark ps-5" href="#"><i class="material-symbols-rounded opacity-5 m-1">calculate</i><span class="nav-link-text ms-1">代管費獎金計算</span></a></li>
+              <li><a class="nav-link text-dark ps-5" href="#"><i class="material-symbols-rounded opacity-5 m-1">search</i><span class="nav-link-text ms-1">代管費獎金查詢</span></a></li>
+              <li><a class="nav-link text-dark ps-5" href="#"><i class="material-symbols-rounded opacity-5 m-1">calculate</i><span class="nav-link-text ms-1">媒合金獎金計算</span></a></li>
+              <li><a class="nav-link text-dark ps-5" href="#"><i class="material-symbols-rounded opacity-5 m-1">search</i><span class="nav-link-text ms-1">媒合金獎金查詢</span></a></li>
+            </ul>
+          </li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">summarize</i><span class="nav-link-text ms-1">週報查詢</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#financeSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">account_balance_wallet</i>
+          <span class="nav-link-text ms-1">財務管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="financeSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">account_balance</i><span class="nav-link-text ms-1">國泰交易資料查詢</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">payments</i><span class="nav-link-text ms-1">催收管理</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#systemSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">settings</i>
+          <span class="nav-link-text ms-1">系統管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="systemSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">settings</i><span class="nav-link-text ms-1">系統參數管理</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">business</i><span class="nav-link-text ms-1">團隊管理</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">manage_accounts</i><span class="nav-link-text ms-1">使用者管理</span></a></li>
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">badge</i><span class="nav-link-text ms-1">角色管理</span></a></li>
+        </ul>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark" data-bs-toggle="collapse" href="#trainSubmenu" aria-expanded="false">
+          <i class="material-symbols-rounded opacity-5 m-1">school</i>
+          <span class="nav-link-text ms-1">增員管理</span>
+        </a>
+        <ul class="collapse list-unstyled" id="trainSubmenu">
+          <li><a class="nav-link text-dark ps-4" href="#"><i class="material-symbols-rounded opacity-5 m-1">menu_book</i><span class="nav-link-text ms-1">課程管理</span></a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</aside>
+
+<!-- ============ Main ============ -->
+<main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg">
+  <!-- Top navbar -->
+  <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl mt-3" id="navbarBlur">
+    <div class="container-fluid py-1 px-3">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0">
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="#">系統功能</a></li>
+          <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="index.html">物件投資評估</a></li>
+          <li class="breadcrumb-item text-sm text-dark active" aria-current="page">新增整層住宅評估</li>
+        </ol>
+      </nav>
+      <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+        <ul class="navbar-nav justify-content-end ms-auto">
+          <li class="nav-item d-flex align-items-center">
+            <a class="nav-link text-body font-weight-bold px-0" href="#">
+              <i class="material-symbols-rounded">account_circle</i>
+              <span class="d-sm-inline d-none ms-1">系統管理員</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page content -->
+  <div class="container-fluid py-4">
+    <div class="card mb-4">
+      <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0 page-title">標的投資案評估表 - 整層住宅</h5>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-info btn-sm mb-0">上傳租金表</button>
+          <button class="btn btn-outline-success btn-sm mb-0">上傳成本評估表</button>
+          <button class="btn btn-outline-info btn-sm mb-0">重複換算</button>
+        </div>
+      </div>
+      <div class="card-body pt-3">
+
+        <!-- ====== 物件基本資料 ====== -->
+        <div class="section-block">
+          <div class="section-title">物件基本資料</div>
+          <div class="section-body">
+            <!-- 群組1：地址 -->
+            <div class="lease-group rounded p-3 mb-2" style="background:#eef3fb;">
+            <div class="row g-3 mb-0">
+              <div class="col-md-3">
+                <label class="form-label">房型</label>
+                <input type="text" class="form-control form-control-sm bg-light fw-bold" id="roomType" value="整層住宅" readonly>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">物件地址 縣市</label>
+                <select class="form-select form-select-sm" id="city">
+                  <option value="">--請選擇--</option>
+                  <option>台中巿</option>
+                  <option>台北巿</option>
+                  <option>台南巿</option>
+                  <option>嘉義巿</option>
+                  <option>新北巿</option>
+                  <option>桃園市</option>
+                  <option>高雄巿</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">鄉鎮市區</label>
+                <select class="form-select form-select-sm" id="district">
+                  <option value="">--請選擇--</option>
+                  <option>中區</option>
+                  <option>北區</option>
+                  <option>北屯區</option>
+                  <option>南區</option>
+                  <option>南屯區</option>
+                  <option>東區</option>
+                  <option>西區</option>
+                  <option>西屯區</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">路段 / 詳細地址</label>
+                <input type="text" class="form-control form-control-sm" id="address" placeholder="例：和平西路">
+              </div>
+            </div>
+            </div>
+            <!-- 群組2：物件規格 -->
+            <div class="lease-group rounded p-3 mb-2" style="background:#fff8ec;">
+            <div class="row g-3 mb-0">
+              <div class="col-md-3">
+                <label class="form-label">室內總坪數</label>
+                <div class="input-group input-group-sm">
+                  <input type="text" class="form-control" id="indoorArea" step="0.01">
+                  <span class="input-group-text">坪</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">車位</label>
+                <div class="input-group input-group-sm">
+                  <input type="number" class="form-control" id="parkingSpaces">
+                  <span class="input-group-text">個</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">房屋型態</label>
+                <select class="form-select form-select-sm" id="houseType">
+                  <option value="">--請選擇--</option>
+                  <option>公寓</option>
+                  <option>新建案(10年內)</option>
+                  <option>電梯大樓</option>
+                </select>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">所在樓層</label>
+                <div class="input-group input-group-sm">
+                  <input type="text" class="form-control" id="floorInfo" placeholder="3">
+                  <span class="input-group-text">F</span>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label">格局</label>
+                <div class="d-flex gap-1">
+                  <div class="input-group input-group-sm">
+                    <input type="number" class="form-control" id="layoutBedroom" placeholder="0">
+                    <span class="input-group-text">房</span>
+                  </div>
+                  <div class="input-group input-group-sm">
+                    <input type="number" class="form-control" id="layoutLiving" placeholder="0">
+                    <span class="input-group-text">廳</span>
+                  </div>
+                  <div class="input-group input-group-sm">
+                    <input type="number" class="form-control" id="layoutBath" placeholder="0">
+                    <span class="input-group-text">衛</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <label class="form-label mb-0">樓層詳細資訊</label>
+                  <button type="button" class="btn btn-success btn-sm py-1 px-2" id="addFloorRow">
+                    <i class="fas fa-plus me-1"></i>新增樓層
+                  </button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-sm table-bordered align-middle mb-2" id="floorDetailTable">
+                    <thead class="table-light">
+                      <tr>
+                        <th style="width:40%">樓層</th>
+                        <th style="width:40%">坪數</th>
+                        <th style="width:20%" class="text-center">操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" min="1" placeholder="3">
+                            <span class="input-group-text">F</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" step="0.01" placeholder="0.00">
+                            <span class="input-group-text">坪</span>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <button type="button" class="btn btn-danger btn-sm py-1 px-2 remove-floor-row"><i class="fas fa-trash"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <!-- 室內設備 -->
+              <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <label class="form-label mb-0">室內設備（房東已提供的設備，後續成本估算將自動扣除）</label>
+                  <button type="button" class="btn btn-success btn-sm py-1 px-2" id="addEquipmentRow">
+                    <i class="fas fa-plus me-1"></i>新增設備
+                  </button>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-sm table-bordered align-middle mb-2" id="equipmentTable">
+                    <thead class="table-light">
+                      <tr>
+                        <th style="width:40%">設備名稱</th>
+                        <th style="width:40%">數量</th>
+                        <th style="width:20%" class="text-center">操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <select class="form-select form-select-sm equipment-name">
+                            <option value="">--請選擇--</option>
+                            <option>冷氣</option>
+                            <option>熱水器</option>
+                            <option>瓦斯爐</option>
+                            <option>冰箱</option>
+                            <option>洗衣機</option>
+                            <option>抽油煙機</option>
+                            <option>電視機</option>
+                            <option data-custom="1">其他（自行填寫）</option>
+                          </select>
+                          <input type="text" class="form-control form-control-sm mt-1 equipment-custom" placeholder="自行填寫設備名稱" style="display:none;">
+                        </td>
+                        <td>
+                          <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" value="0" min="0">
+                            <span class="input-group-text">台</span>
+                          </div>
+                        </td>
+                        <td class="text-center">
+                          <button type="button" class="btn btn-danger btn-sm py-1 px-2 remove-equipment-row"><i class="fas fa-trash"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">特殊備註</label>
+                <textarea class="form-control form-control-sm" id="remark" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 物件照片 / 影片 ====== -->
+        <div class="section-block">
+          <div class="section-title">物件照片 / 影片（可多檔案上傳）</div>
+          <div class="section-body">
+            <div class="row g-3">
+              <!-- 照片上傳 -->
+              <div class="col-md-6">
+                <label class="form-label fw-bold"><i class="fas fa-image me-1"></i>上傳照片</label>
+                <label class="upload-zone w-100">
+                  <input type="file" multiple hidden accept=".jpg,.jpeg,.png,.zip,.7z,.rar,.tar,.gz,.bz2">
+                  <div class="text-center text-muted">
+                    <i class="fas fa-cloud-arrow-up fa-2x mb-2"></i>
+                    <div>點擊或拖曳照片上傳</div>
+                    <div class="small mt-1">支援格式：JPG, PNG, ZIP, 7Z, RAR, TAR, GZ, BZ2</div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- 影片上傳 -->
+              <div class="col-md-6">
+                <label class="form-label fw-bold"><i class="fas fa-video me-1"></i>上傳影片</label>
+                <label class="upload-zone w-100">
+                  <input type="file" multiple hidden accept=".mp4,.mov,.avi,.wmv,.mkv">
+                  <div class="text-center text-muted">
+                    <i class="fas fa-film fa-2x mb-2"></i>
+                    <div>點擊或拖曳影片上傳</div>
+                    <div class="small mt-1">支援格式：MP4, MOV, AVI, WMV, MKV</div>
+                  </div>
+                </label>
+              </div>
+
+            </div>
+
+            <!-- 已上傳預覽（預設隱藏） -->
+            <div id="imagePreviewSection" class="mt-3" style="display:none;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <strong>已上傳檔案預覽</strong>
+                <div class="btn-group btn-group-sm">
+                  <button type="button" class="btn btn-warning"><i class="fas fa-square-check me-1"></i>選擇檔案</button>
+                  <button type="button" class="btn btn-danger" style="display:none"><i class="fas fa-trash me-1"></i>刪除選中</button>
+                  <button type="button" class="btn btn-secondary" style="display:none"><i class="fas fa-xmark me-1"></i>取消選擇</button>
+                </div>
+              </div>
+              <div class="text-center text-muted py-4 border rounded">
+                <i class="fas fa-images fa-3x mb-2 opacity-50"></i>
+                <p class="mb-0">尚未上傳檔案</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 承租條件 ====== -->
+        <div class="section-block">
+          <div class="section-title">承租條件</div>
+          <div class="section-body">
+            <!-- 第一行：月租金、租期、免租期 -->
+            <div class="lease-group rounded p-3 mb-2" style="background:#eef3fb;">
+            <div class="row g-3 mb-0">
+              <div class="col-md-3">
+                <label class="form-label">月租金（房東開價）</label>
+                <div class="input-group input-group-sm">
+                  <input type="number" class="form-control" id="rentMonth" value="10000">
+                  <span class="input-group-text">元/月</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">租期</label>
+                <div class="input-group input-group-sm">
+                  <input type="number" class="form-control" id="leaseYear" value="5">
+                  <span class="input-group-text">年</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label class="form-label">免租期</label>
+                <div class="input-group input-group-sm">
+                  <input type="number" class="form-control" id="freeLeaseMonth" value="0">
+                  <span class="input-group-text">月</span>
+                </div>
+              </div>
+            </div>
+            </div>
+            <!-- 第二行：調漲租金規則 -->
+            <div class="lease-group rounded p-3 mb-3" style="background:#fff8ec;">
+            <div class="row g-3 mb-0">
+              <div class="col-md-7">
+                <label class="form-label">調漲租金規則</label>
+                <div class="d-flex flex-wrap gap-2 align-items-center mb-1">
+                  <div class="form-check form-check-inline mb-0">
+                    <input class="form-check-input" type="radio" name="raiseMode" id="raiseModePct" value="percent" checked>
+                    <label class="form-check-label small" for="raiseModePct">按百分比</label>
+                  </div>
+                  <div class="form-check form-check-inline mb-0">
+                    <input class="form-check-input" type="radio" name="raiseMode" id="raiseModeAmt" value="amount">
+                    <label class="form-check-label small" for="raiseModeAmt">固定金額</label>
+                  </div>
+                </div>
+                <div class="d-flex gap-3 align-items-center">
+                  <div class="raise-rule">
+                    <span>每</span>
+                    <input type="number" id="rentRaiseYear" value="2" min="1">
+                    <span>年漲</span>
+                    <input type="number" id="rentRaisePct" value="2" min="0" style="border-right:none;">
+                    <span id="raisePctGroup">%</span>
+                    <input type="number" id="rentRaiseAmt" value="500" min="0" style="display:none;border-right:none;">
+                    <span id="raiseAmtGroup" style="display:none;">元</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            <!-- 下方：租金表（依租期自動生成年度，唯讀顯示） -->
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <label class="form-label mb-0">收房租金（房東開價）— 年度明細</label>
+              <span class="small text-muted"><i class="fas fa-lock me-1"></i>依上方設定自動計算，不可手動修改</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered align-middle mb-0" id="rentTable">
+                <thead class="table-light">
+                  <tr>
+                    <th style="width:10%" class="text-center">年度</th>
+                    <th style="width:30%" class="text-center">年租金</th>
+                    <th style="width:30%" class="text-center">調幅</th>
+                    <th style="width:30%" class="text-center">月租金</th>
+                  </tr>
+                </thead>
+                <tbody id="rentTableBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 營業收入（招租價格預估） ====== -->
+        <div class="section-block">
+          <div class="section-title">營業收入</div>
+          <div class="section-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex align-items-center gap-3">
+                <label class="form-label mb-0">預期營業收入（三檔平均）</label>
+                <div class="input-group input-group-sm" style="width:180px;">
+                  <input type="text" class="form-control fw-bold text-end" id="expectedRevenue" readonly>
+                  <span class="input-group-text">元</span>
+                </div>
+              </div>
+              <div class="d-flex gap-2">
+                <button type="button" class="btn btn-success btn-sm py-1 px-2" id="addRentEstimateRow">
+                  <i class="fas fa-plus me-1"></i>新增
+                </button>
+                <button class="btn btn-brand btn-sm" id="btnReAnalyze">
+                  <i class="fas fa-wand-magic-sparkles me-1"></i>重新分析
+                </button>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered align-middle mb-2" id="rentEstimateTable">
+                <thead class="table-light">
+                  <tr>
+                    <th style="width:15%">樓層</th>
+                    <th style="width:25%">房型</th>
+                    <th style="width:15%" class="text-success">樂觀預估</th>
+                    <th style="width:15%" class="text-primary">保守預估</th>
+                    <th style="width:15%" class="text-warning">悲觀預估</th>
+                    <th style="width:15%" class="text-center">操作</th>
+                  </tr>
+                </thead>
+                <!-- TODO: 選擇房型後，AI 自動填入樂觀 / 保守 / 悲觀預估租金 -->
+                <tbody>
+                  <tr>
+                    <td><div class="input-group input-group-sm"><input type="number" class="form-control"><span class="input-group-text">F</span></div></td>
+                    <td>
+                      <select class="form-select form-select-sm">
+                        <option value="">--請選擇--</option>
+                        <option>三房一廳</option>
+                        <option>三房二廳</option>
+                        <option>兩房一廳</option>
+                        <option>兩房二廳</option>
+                        <option>套房</option>
+                        <option>雅房</option>
+                      </select>
+                    </td>
+                    <td>
+                      <div class="input-group input-group-sm">
+                        <input type="number" class="form-control rent-est" placeholder="0">
+                        <span class="input-group-text">元</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="input-group input-group-sm">
+                        <input type="number" class="form-control rent-est" placeholder="0">
+                        <span class="input-group-text">元</span>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="input-group input-group-sm">
+                        <input type="number" class="form-control rent-est" placeholder="0">
+                        <span class="input-group-text">元</span>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-danger btn-sm py-1 px-2 remove-rent-row"><i class="fas fa-trash"></i></button>
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot class="table-light">
+                  <tr>
+                    <th colspan="2" class="text-end">總計</th>
+                    <th class="text-success"><span id="rentOptSum">0</span> 元</th>
+                    <th class="text-primary"><span id="rentMidSum">0</span> 元</th>
+                    <th class="text-warning"><span id="rentPesSum">0</span> 元</th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="alert alert-warning py-2 px-3 mb-0 mt-2 small">
+              <i class="fas fa-triangle-exclamation me-1"></i><strong>開發待辦：</strong>選擇房型後，AI 自動填入樂觀 / 保守 / 悲觀預估租金
+            </div>
+          </div>
+        </div>
+        <div class="section-block">
+          <div class="section-title">啟動成本估算</div>
+          <div class="section-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div class="d-flex align-items-center gap-3">
+                <label class="form-label mb-0 fw-bold">預期投入成本總計</label>
+                <div class="input-group input-group-sm" style="width:240px;">
+                  <input type="number" id="total-cost" class="form-control fw-bold text-end" readonly>
+                  <span class="input-group-text">元</span>
+                </div>
+              </div>
+              <button class="btn btn-success btn-sm" id="add-main"><i class="fas fa-plus me-1"></i>新增成本主項</button>
+            </div>
+            <div id="cost-groups">
+              <div class="cost-main card mb-3">
+                <div class="card-body p-3">
+                  <div class="d-flex align-items-center mb-2">
+                    <select class="form-select form-select-sm cost-main-select me-2" style="max-width:200px">
+                      <option value="">--請選擇--</option>
+                      <option value="decoration">裝潢</option>
+                      <option value="cleaning">清潔清運</option>
+                      <option value="appliance">家電配備</option>
+                      <option value="development">開發費用</option>
+                    </select>
+                    <button class="btn btn-danger btn-sm ms-auto py-1 px-2" onclick="removeMain(this)">刪除主項</button>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-sm table-bordered align-middle mb-2">
+                      <thead class="table-light">
+                        <tr>
+                          <th style="width:35%">成本項目</th>
+                          <th style="width:20%">單位</th>
+                          <th style="width:20%">單價</th>
+                          <th style="width:20%">小計</th>
+                          <th style="width:5%" class="text-center">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody class="cost-subs">
+                        <tr class="sub-row">
+                          <td>
+                            <select class="form-select form-select-sm sub-item-select"><option value="">--請選擇--</option><option value="__other__">其他（自行填寫）</option></select>
+                            <input type="text" class="form-control form-control-sm mt-1 sub-item-custom" placeholder="請輸入項目名稱" style="display:none;">
+                          </td>
+                          <td><div class="input-group input-group-sm"><input type="number" class="form-control qty" value="1"><span class="input-group-text unit-text"></span></div></td>
+                          <td><input type="text" class="form-control form-control-sm price" placeholder="單價"></td>
+                          <td><input type="text" class="form-control form-control-sm subtotal" placeholder="小計" readonly></td>
+                          <td class="text-center"><button class="btn btn-danger btn-sm py-1 px-2" onclick="removeSub(this)"><i class="fas fa-trash"></i></button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <button class="btn btn-outline-primary btn-sm add-sub"><i class="fas fa-plus me-1"></i>新增子項</button>
+                </div>
+              </div>
+            </div>
+            <div class="alert alert-warning py-2 px-3 mb-0 mt-2 small">
+              <i class="fas fa-triangle-exclamation me-1"></i><strong>開發待辦：</strong>
+              <ol class="mb-0 mt-1 ps-3">
+                <li>所有成本項目的單價由後台統一配置，前端自動帶入，不可手動修改</li>
+                <li>地板工程數量自動帶入：室內總坪數 − 2（坪）</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+        <!-- ====== 營運成本估算 ====== -->
+        <div class="section-block">
+          <div class="section-title">營運成本估算</div>
+          <div class="section-body p-0">
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered align-middle mb-0" id="opCostTable">
+                <colgroup>
+                  <col style="width:20%">
+                  <col style="width:12%">
+                  <col style="width:22%">
+                  <col style="width:28%">
+                  <col style="width:18%">
+                </colgroup>
+                <tbody>
+                  <!-- 人事及管理支出 總計 -->
+                  <tr style="background:#dde3ee">
+                    <td class="fw-bold ps-3 py-2" colspan="2">人事及管理支出</td>
+                    <td class="py-2" colspan="2">
+                      <div class="input-group input-group-sm" style="max-width:200px">
+                        <input type="text" class="form-control fw-bold" id="opPersonnelTotal" readonly>
+                        <span class="input-group-text">元</span>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+
+                  <!-- 成本四：人事費用 -->
+                  <tr>
+                    <td rowspan="3" class="align-middle fw-bold ps-3" style="background:#eef5e8">人事費用</td>
+                    <td rowspan="3" class="align-middle text-center fw-bold" style="background:#eef5e8">
+                      <span id="opPersonnelCost">0</span>
+                    </td>
+                    <th class="table-light small text-muted fw-normal">業績獎金</th>
+                    <th class="table-light small"></th>
+                    <th class="table-light small text-muted fw-normal">基準</th>
+                  </tr>
+                  <tr>
+                    <td class="ps-3 small">出租仲介費</td>
+                    <td>
+                      <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" id="opBrokerageFee" readonly>
+                        <span class="input-group-text">元</span>
+                      </div>
+                    </td>
+                    <td><input type="text" class="form-control form-control-sm text-center" value="50%" readonly></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3 small">代管費</td>
+                    <td>
+                      <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" id="opMgmtFee" readonly>
+                        <span class="input-group-text">元</span>
+                      </div>
+                    </td>
+                    <td><input type="text" class="form-control form-control-sm text-center" value="5%" readonly></td>
+                  </tr>
+
+                  <!-- 成本五：營運修繕攤提 -->
+                  <tr>
+                    <td rowspan="2" class="align-middle fw-bold ps-3" style="background:#eef5e8">營運修繕攤提</td>
+                    <td rowspan="2" class="align-middle text-center fw-bold" style="background:#eef5e8">
+                      <span id="opRepairCost">0</span>
+                    </td>
+                    <th class="table-light small text-muted fw-normal">營業修繕</th>
+                    <th class="table-light small"></th>
+                    <th class="table-light small text-muted fw-normal">更新年限</th>
+                  </tr>
+                  <tr>
+                    <td class="ps-3 small">修繕更新次數</td>
+                    <td>
+                      <div class="input-group input-group-sm">
+                        <input type="text" class="form-control" id="opRepairCount" readonly>
+                        <span class="input-group-text">元</span>
+                      </div>
+                    </td>
+                    <td><input type="text" class="form-control form-control-sm text-center" value="0.5" readonly></td>
+                  </tr>
+
+                  <!-- 成本六：稅務 -->
+                  <tr>
+                    <td rowspan="2" class="align-middle fw-bold ps-3" style="background:#d4edda">稅務</td>
+                    <td rowspan="2" class="align-middle text-center fw-bold" style="background:#d4edda">
+                      <span id="opTaxCost">0</span>
+                    </td>
+                    <th class="table-light small text-muted fw-normal">稅率</th>
+                    <th class="table-light small"></th>
+                    <th class="table-light small"></th>
+                  </tr>
+                  <tr>
+                    <td class="ps-3 small">稅率</td>
+                    <td>
+                      <input type="text" class="form-control form-control-sm" id="opTaxRate" value="9.6%" readonly>
+                    </td>
+                    <td>
+                      <select class="form-select form-select-sm" id="taxType" onchange="updateOpCost()">
+                        <option value="0.096">個人戶</option>
+                        <option value="0.10">公司戶</option>
+                      </select>
+                    </td>
+                  </tr>
+
+                  <!-- 成本七：其他 -->
+                  <tr>
+                    <td rowspan="2" class="align-middle fw-bold ps-3">其他</td>
+                    <td rowspan="2" class="align-middle text-center fw-bold">
+                      <span id="opOtherCost">-</span>
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3 small">保險</td>
+                    <td>
+                      <div class="input-group input-group-sm">
+                        <input type="number" class="form-control" id="insuranceCost" placeholder="0" oninput="updateOpCost()">
+                        <span class="input-group-text">元</span>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="alert alert-warning py-2 px-3 mb-0 mt-0 small">
+              <i class="fas fa-triangle-exclamation me-1"></i><strong>開發待辦：</strong>
+              <ol class="mb-0 mt-1 ps-3">
+                <li>所有基準由後台統一配置，前端自動帶入，不可手動修改</li>
+                <li>出租仲介費 = 營業收入的預期營業收入 × 基準</li>
+                <li>代管費 = (營業收入的預期營業收入 − 承租條件的月租金) × 基準</li>
+                <li>修繕更新次數 = 營業收入的預期營業收入 × 基準</li>
+                <li>保險：可自行輸入</li>
+                <li>人事費用 = 出租仲介費 / 12 + 代管費</li>
+                <li>營運修繕攤提 = 修繕更新次數 / 12</li>
+                <li>稅務 = 營業收入的預期營業收入 × 稅率</li>
+                <li>其他 = 保險 / 12</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 屋況分析 (AI) ====== -->
+        <div class="section-block">
+          <div class="section-title">
+            屋況分析 (AI)
+            <span class="badge bg-light text-dark ms-2"><i class="fas fa-wand-magic-sparkles me-1"></i>AI 產出</span>
+          </div>
+          <div class="section-body">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="text-muted small">
+                <i class="fas fa-circle-info me-1"></i>系統將依物件地址，自動分析周邊生活機能與格局建議。
+              </div>
+              <button class="btn btn-brand btn-sm" id="btnAiAnalyze">
+                <i class="fas fa-wand-magic-sparkles me-1"></i>重新分析
+              </button>
+            </div>
+
+            <!-- 位置交通 -->
+            <div class="mb-3">
+              <div class="fw-bold mb-2" style="color:#17408B"><i class="fas fa-location-dot me-1"></i>位置交通</div>
+              <div class="table-responsive">
+                <table class="table table-sm table-bordered align-middle mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="width:15%">類別</th>
+                      <th style="width:30%">地點</th>
+                      <th style="width:15%">距離</th>
+                      <th style="width:15%">步行/車程</th>
+                      <th>說明</th>
+                    </tr>
+                  </thead>
+                  <tbody id="aiTrafficTable">
+                    <tr>
+                      <td><i class="fas fa-train-subway me-1"></i>捷運站</td>
+                      <td><input type="text" class="form-control form-control-sm" value="板橋" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" value="700" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="步行10分鐘，車程3分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="相當便利" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fas fa-bus me-1"></i>公車站</td>
+                      <td><input type="text" class="form-control form-control-sm" value="板橋客運站" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" value="700" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="步行10分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="相當便利" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fas fa-bicycle me-1"></i>UBIKE</td>
+                      <td><input type="text" class="form-control form-control-sm" value="板橋車站(新站路)" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" value="200" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="走路3分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="騎車咻咻咻" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fas fa-store me-1"></i>超商</td>
+                      <td><input type="text" class="form-control form-control-sm" value="7-ELEVEN 新板橋門市" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" value="50" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="走路1分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="半夜不怕肚子餓" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fas fa-bag-shopping me-1"></i>大型購物中心</td>
+                      <td><input type="text" class="form-control form-control-sm" value="環球購物中心" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="車程10分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="假日不怕無聊" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fas fa-basket-shopping me-1"></i>市場</td>
+                      <td><input type="text" class="form-control form-control-sm" value="民權路傳統市場" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" value="300" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="走路5分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="不怕肚子餓" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fas fa-square-parking me-1"></i>停車場</td>
+                      <td><input type="text" class="form-control form-control-sm" value="板橋停車場" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" value="200" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="走路3分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="愛車有地方睡" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fas fa-hospital me-1"></i>醫院</td>
+                      <td><input type="text" class="form-control form-control-sm" value="板新醫院" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" value="700" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="走路10分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="健康一把罩" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><i class="fas fa-shield-halved me-1"></i>警察局</td>
+                      <td><input type="text" class="form-control form-control-sm" value="文化警察局" readonly></td>
+                      <td><div class="input-group input-group-sm"><input type="number" class="form-control" value="400" readonly><span class="input-group-text">公尺</span></div></td>
+                      <td><input type="text" class="form-control form-control-sm" value="走路4分鐘" readonly></td>
+                      <td><input type="text" class="form-control form-control-sm" value="不怕有壞人" readonly></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 格局建議 -->
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label fw-bold" style="color:#17408B"><i class="fas fa-table-cells me-1"></i>建議格局</label>
+                <textarea class="form-control form-control-sm" id="aiLayoutSuggest" rows="2" readonly>每層樓可隔三套 或 兩房，利用率高</textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 投資關鍵指標 ====== -->
+        <div class="section-block">
+          <div class="section-title">投資關鍵指標</div>
+          <div class="section-body p-0">
+            <div class="table-responsive">
+              <table class="table table-sm table-bordered mb-0" id="keyMetricsTable">
+                <colgroup>
+                  <col style="width:35%">
+                  <col style="width:65%">
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <td class="ps-3 text-danger fw-bold">前五年平均收房租金</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control text-danger fw-bold" id="avg5yRent" readonly><span class="input-group-text">元</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">年平均租金</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control" id="avgYearRent" readonly><span class="input-group-text">元</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">營業收入</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control" id="bizRevenue" readonly><span class="input-group-text">元</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">價差</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control" id="bizSpread" readonly><span class="input-group-text">元</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">營業成本</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control" id="bizCost" readonly><span class="input-group-text">元</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3 fw-bold text-danger">營業淨利</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control text-danger fw-bold" id="bizNetProfit" readonly><span class="input-group-text">元</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">租期</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control" id="investLeaseYear" readonly><span class="input-group-text">年</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">免租期</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control" id="investFreeMonth" readonly><span class="input-group-text">月</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">啟動成本</td>
+                    <td><div class="input-group input-group-sm"><input type="text" class="form-control" id="investStartCost" readonly><span class="input-group-text">元</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">預期裝潢時間</td>
+                    <td><div class="input-group input-group-sm"><input type="number" class="form-control" id="investDecoMonth" value="1"><span class="input-group-text">月</span></div></td>
+                  </tr>
+                  <tr>
+                    <td class="ps-3">招租期限</td>
+                    <td><div class="input-group input-group-sm"><input type="number" class="form-control" id="investAdMonth" value="1"><span class="input-group-text">月</span></div></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="alert alert-warning py-2 px-3 mb-0 mt-0 small">
+              <i class="fas fa-triangle-exclamation me-1"></i><strong>開發待辦：</strong>
+              <ol class="mb-0 mt-1 ps-3">
+                <li>前五年平均收房租金 = 承租條件的月租金加總（前五年）/ 5</li>
+                <li>年平均租金 = 承租條件的月租金加總 / 租期</li>
+                <li>營業收入 = 營業收入區塊的預期營業收入</li>
+                <li>價差 = 營業收入 − 年平均租金</li>
+                <li>營業成本 = 營運成本估算的人事及管理支出</li>
+                <li>營業淨利 = 價差 − 營業成本</li>
+                <li>租期 = 承租條件的租期</li>
+                <li>免租期 = 承租條件的免租期</li>
+                <li>啟動成本 = 啟動成本估算的預期投入成本</li>
+                <li>預期裝潢時間：用戶自行輸入</li>
+                <li>招租期限：用戶自行輸入</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- ====== 投資評估 ====== -->
+        <div class="section-block">
+          <div class="section-title">投資評估</div>
+          <div class="section-body">
+
+            <!-- 投報率詳盡分析（3x3 矩陣） -->
+            <div class="mb-3">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h6 class="mb-0 fw-bold" style="color:#17408B"><i class="fas fa-table-list me-1"></i>投報率詳盡分析（3×3 情境矩陣）</h6>
+                <div class="d-flex gap-2 align-items-end">
+                  <div>
+                    <label class="form-label small mb-0">投報率門檻</label>
+                    <div class="input-group input-group-sm" style="width:120px">
+                      <input type="number" class="form-control" id="irrThreshold" value="15">
+                      <span class="input-group-text">%</span>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="form-label small mb-0">回本年限上限</label>
+                    <div class="input-group input-group-sm" style="width:120px">
+                      <input type="number" class="form-control" id="paybackThreshold" value="1">
+                      <span class="input-group-text">年</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-9">
+                  <div class="table-responsive">
+                    <table class="table table-sm table-bordered text-center align-middle mb-0" id="irrMatrix">
+                      <thead class="table-light">
+                        <tr>
+                          <th rowspan="2" style="width:14%; vertical-align: middle;">租金 \ 空置期</th>
+                          <th colspan="3">空置期</th>
+                        </tr>
+                        <tr>
+                          <th class="text-success">樂觀 100%</th>
+                          <th class="text-primary">保守 95%</th>
+                          <th class="text-warning">悲觀 90%</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th class="text-success">樂觀</th>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">0.78 年</div><div class="small text-muted">投報率</div><div>95.6%</div><span class="badge bg-success mt-1">是</span></td>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">0.88 年</div><div class="small text-muted">投報率</div><div>79.4%</div><span class="badge bg-success mt-1">是</span></td>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.01 年</div><div class="small text-muted">投報率</div><div>71.4%</div><span class="badge bg-secondary mt-1">否</span></td>
+                        </tr>
+                        <tr>
+                          <th class="text-primary">保守</th>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">0.92 年</div><div class="small text-muted">投報率</div><div>79.4%</div><span class="badge bg-success mt-1">是</span></td>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.05 年</div><div class="small text-muted">投報率</div><div>68.2%</div><span class="badge bg-secondary mt-1">否</span></td>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.22 年</div><div class="small text-muted">投報率</div><div>56.9%</div><span class="badge bg-secondary mt-1">否</span></td>
+                        </tr>
+                        <tr>
+                          <th class="text-warning">悲觀</th>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.01 年</div><div class="small text-muted">投報率</div><div>79.4%</div><span class="badge bg-secondary mt-1">否</span></td>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.16 年</div><div class="small text-muted">投報率</div><div>68.2%</div><span class="badge bg-secondary mt-1">否</span></td>
+                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.35 年</div><div class="small text-muted">投報率</div><div>56.9%</div><span class="badge bg-secondary mt-1">否</span></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="alert alert-light border p-2 small mt-2 mb-0">
+                    <strong>公式：</strong>回本期 = 啟動成本 ÷ (預期租金收入 − 前三年平均收房租金/月 − 營運成本 − 稅額) + 裝潢期 + 招租期限 − 免租期
+                  </div>
+                </div>
+
+                <!-- 評分卡 + 收房底價建議 -->
+                <div class="col-md-3">
+                  <div class="sub-block h-100 text-center">
+                    <div class="sub-block-title">綜合評分</div>
+                    <div class="score-circle mx-auto mb-2">
+                      <span class="score-num" id="totalScore">45</span>
+                      <span class="score-unit">分</span>
+                    </div>
+                    <div class="small text-muted mb-2">60 分以上可承作</div>
+
+                    <div class="text-start mt-3">
+                      <div class="small fw-bold mb-1">評分權重</div>
+                      <div class="d-flex justify-content-between small"><span>啟動成本</span><span>100</span></div>
+                      <div class="d-flex justify-content-between small"><span>淨利</span><span>10</span></div>
+                      <div class="d-flex justify-content-between small"><span>回本</span><span>10</span></div>
+                      <div class="d-flex justify-content-between small"><span>租期</span><span>24</span></div>
+                      <div class="d-flex justify-content-between small"><span>總收入</span><span>240</span></div>
+                      <div class="d-flex justify-content-between small"><span>空置期</span><span>70%</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- bottom buttons -->
+        <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+          <button class="btn btn-info btn-sm">評估</button>
+          <button class="btn btn-success btn-sm">儲存評估表</button>
+          <button class="btn btn-secondary btn-sm">清除</button>
+          <a href="index.html" class="btn btn-light btn-sm">回上一頁</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- JS -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,296 @@
+/* Ensure standalone inputs show border; input-group handles its own borders natively */
+.form-control, .form-select { border: 1px solid #ced4da; text-align: left !important; }
+/* Read-only display fields get gray background */
+.form-control[readonly] { background-color: #e9ecef !important; }
+/* Override Material Dashboard focus style that removes border */
+.form-control:focus,
+.form-select:focus {
+  border: 1px solid #17408B !important;
+  box-shadow: 0 0 0 0.2rem rgba(23, 64, 139, 0.15) !important;
+  background-image: none !important;
+  background-size: auto !important;
+}
+.input-group-sm .input-group-text { border-radius: 0 0.25rem 0.25rem 0; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+input[type=number] { -moz-appearance: textfield; }
+body {
+  font-family: "Inter", "Microsoft JhengHei", "PingFang TC", system-ui, sans-serif;
+  font-size: 0.95rem;
+}
+
+/* ============ Sidebar brand ============ */
+.brand-logo-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: "Inter", "Arial Black", sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+.brand-sky { color: #344767; }
+.brand-fun {
+  color: #e74c3c;
+  font-style: italic;
+}
+
+.sidenav .nav-link {
+  font-size: 0.85rem;
+  padding: 0.55rem 1rem;
+  border-radius: 0.375rem;
+  margin: 0 0.5rem;
+}
+.sidenav .nav-link .material-symbols-rounded { font-size: 1.1rem; }
+.sidenav .nav-link.active,
+.sidenav .nav-link.active:hover,
+.sidenav .nav-link.active:focus {
+  background: #212529 !important;
+  color: #fff !important;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+.sidenav .nav-link.active i { color: #fff !important; opacity: 1 !important; }
+
+/* hover 時不做任何改動（active 那項不受影響） */
+.sidenav .nav-link:not(.active):hover,
+.sidenav .nav-link:not(.active):focus,
+.sidenav .nav-item:hover .nav-link:not(.active),
+.sidenav .nav-item:focus .nav-link:not(.active) {
+  background: transparent !important;
+  color: inherit !important;
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+.sidenav .nav-link::before,
+.sidenav .nav-link::after,
+.sidenav .nav-link:hover::before,
+.sidenav .nav-link:hover::after,
+.sidenav .nav-link:focus::before,
+.sidenav .nav-link:focus::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+}
+/* active 項目即使在 hover 也不允許多餘陰影/變化 */
+.sidenav .nav-link.active::before,
+.sidenav .nav-link.active::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* ============ Page title ============ */
+.page-title {
+  border-left: 4px solid #17408B;
+  padding-left: 12px;
+  font-weight: 700;
+  color: #344767;
+}
+
+/* ============ Section blocks ============ */
+.section-block {
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+.section-title {
+  background: #17408B;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+.section-body { padding: 1rem; background: #fff; }
+
+/* ============ Form labels ============ */
+.form-label {
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: #344767 !important;
+  margin-bottom: 0.25rem !important;
+}
+.form-control-sm, .form-select-sm { font-size: 0.8rem; }
+.input-group-sm .input-group-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: transparent;
+  color: #6c757d;
+  padding: 0.25rem 0.35rem;
+  line-height: 1.5;
+}
+.input-group-sm .form-control,
+.input-group-sm .form-select {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  line-height: 1.5;
+}
+.lease-group .input-group-text {
+  background: transparent;
+  border-color: #ced4da;
+}
+.raise-rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  height: 31px;
+}
+.raise-rule span {
+  padding: 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6c757d;
+  background: transparent;
+  white-space: nowrap;
+  line-height: 31px;
+}
+.raise-rule input {
+  width: 55px;
+  border: none;
+  border-left: 1px solid #ced4da;
+  border-right: 1px solid #ced4da;
+  padding: 0 0.4rem;
+  font-size: 0.85rem;
+  height: 100%;
+  outline: none;
+}
+.raise-rule input:first-child { border-left: none; }
+.raise-rule input:focus { box-shadow: none; background: #f8f9ff; }
+
+/* ============ Buttons ============ */
+.btn { font-size: 0.8rem !important; padding: 0.4rem 1rem !important; }
+.btn-sm { font-size: 0.75rem !important; padding: 0.35rem 0.8rem !important; }
+.btn-lg { font-size: 1rem !important; padding: 0.75rem 2rem !important; }
+
+/* 品牌藍按鈕 */
+.btn-brand {
+  background-color: #17408B !important;
+  border-color: #17408B !important;
+  color: #fff !important;
+}
+.btn-brand:hover,
+.btn-brand:focus,
+.btn-brand:active {
+  background-color: #1a5fb0 !important;
+  border-color: #1a5fb0 !important;
+  color: #fff !important;
+}
+
+/* ============ Upload zone ============ */
+.upload-zone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  border: 2px dashed #cfd4da;
+  border-radius: 0.5rem;
+  background: #fafbfc;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.upload-zone:hover { border-color: #17408B; background: #f0f4fa; }
+
+/* ============ Chart placeholder ============ */
+.chart-placeholder {
+  height: 100%;
+  min-height: 240px;
+  background: #fafbfc;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============ Cost section ============ */
+.cost-main { border: 1px solid #e9ecef; background: #fafbfc; }
+.sub-row { padding-left: 4px; border-left: 3px solid #c7d2fe; margin-left: 0; }
+
+/* ============ Info panel (cost descriptions) ============ */
+.info-panel {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: #166534;
+  font-size: 0.8rem;
+}
+.info-panel-title { font-weight: 700; margin-bottom: 0.5rem; color: #166534; }
+.info-panel ul { margin-bottom: 0.5rem; }
+.info-panel li { margin-bottom: 0.15rem; }
+
+/* ============ Sub blocks (management cost) ============ */
+.sub-block {
+  background: #fafbfc;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  height: 100%;
+}
+.sub-block-title {
+  font-weight: 600;
+  color: #17408B;
+  border-bottom: 1px dashed #cfd4da;
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.85rem;
+}
+
+/* ============ Invest icon ============ */
+.invest-icon {
+  padding: 2rem 0;
+  background: #fafbfc;
+  border: 1px solid #e9ecef;
+  border-radius: 0.5rem;
+}
+
+/* ============ Card adjustments ============ */
+.card { box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.05); }
+.card-header { background: transparent; border-bottom: 1px solid #e9ecef; padding: 0.85rem 1rem; }
+.card-body { padding: 1rem; }
+
+/* ============ Table ============ */
+.table { font-size: 0.8rem; margin-bottom: 0; }
+.table th { font-weight: 600; color: #344767; background: #f6f7f9; }
+.table-sm > :not(caption) > * > * { padding: 0.4rem 0.5rem; }
+.table-responsive { padding: 1px; }
+
+/* Breadcrumb */
+.breadcrumb-item + .breadcrumb-item::before { color: #aaa; }
+
+/* ============ 投報率矩陣 ============ */
+.matrix-cell {
+  background: #fafbfc;
+  padding: 0.5rem !important;
+  line-height: 1.3;
+}
+.matrix-cell .badge { font-size: 0.7rem; padding: 0.25em 0.6em; }
+
+/* ============ 綜合評分圓圈 ============ */
+.score-circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 55%, #17408B 56%);
+  border: 4px solid #17408B;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+  color: #17408B;
+}
+.score-circle .score-num { font-size: 2.6rem; font-weight: 800; line-height: 1; }
+.score-circle .score-unit { font-size: 1rem; font-weight: 600; }
+
+/* ============ 房型評估 - 動態列移除按鈕 hover ============ */
+.remove-floor-row:hover,
+.remove-rent-row:hover {
+  filter: brightness(0.92);
+}
