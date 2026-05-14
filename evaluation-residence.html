@@ -588,12 +588,13 @@
                     <td>
                       <select class="form-select form-select-sm">
                         <option value="">--請選擇--</option>
-                        <option>三房一廳</option>
-                        <option>三房二廳</option>
+                        <option>一房一廳</option>
                         <option>兩房一廳</option>
-                        <option>兩房二廳</option>
+                        <option>兩房一廳</option>
+                        <option>三房一廳</option>
                         <option>套房</option>
                         <option>雅房</option>
+                        <option>店鋪</option>
                       </select>
                     </td>
                     <td>
@@ -695,6 +696,7 @@
               <ol class="mb-0 mt-1 ps-3">
                 <li>所有成本項目的單價由後台統一配置，前端自動帶入，不可手動修改</li>
                 <li>地板工程數量自動帶入：室內總坪數 − 2（坪）</li>
+                <li>油漆工程的單價，對應營業收入的房型（如果有多個則要相加）：套房8000、雅房8000、一房一廳12000、兩房一廳18000、三房一廳24000、店鋪0</li>
               </ol>
             </div>
           </div>
@@ -706,34 +708,40 @@
             <div class="table-responsive">
               <table class="table table-sm table-bordered align-middle mb-0" id="opCostTable">
                 <colgroup>
-                  <col style="width:20%">
                   <col style="width:12%">
-                  <col style="width:22%">
-                  <col style="width:28%">
-                  <col style="width:18%">
+                  <col style="width:8%">
+                  <col style="width:13%">
+                  <col style="width:13%">
+                  <col style="width:10%">
+                  <col style="width:15%">
+                  <col style="width:14%">
+                  <col style="width:15%">
                 </colgroup>
                 <tbody>
                   <!-- 人事及管理支出 總計 -->
                   <tr style="background:#dde3ee">
                     <td class="fw-bold ps-3 py-2" colspan="2">人事及管理支出</td>
-                    <td class="py-2" colspan="2">
+                    <td class="py-2" colspan="3">
                       <div class="input-group input-group-sm" style="max-width:200px">
                         <input type="text" class="form-control fw-bold" id="opPersonnelTotal" readonly>
                         <span class="input-group-text">元</span>
                       </div>
                     </td>
-                    <td></td>
+                    <td colspan="3"></td>
                   </tr>
 
                   <!-- 成本四：人事費用 -->
                   <tr>
-                    <td rowspan="3" class="align-middle fw-bold ps-3" style="background:#eef5e8">人事費用</td>
-                    <td rowspan="3" class="align-middle text-center fw-bold" style="background:#eef5e8">
+                    <td rowspan="3" class="align-middle fw-bold ps-3">人事費用</td>
+                    <td rowspan="3" class="align-middle text-center fw-bold">
                       <span id="opPersonnelCost">0</span>
                     </td>
                     <th class="table-light small text-muted fw-normal">業績獎金</th>
                     <th class="table-light small"></th>
                     <th class="table-light small text-muted fw-normal">基準</th>
+                    <th class="table-light small text-success text-center">樂觀</th>
+                    <th class="table-light small text-primary text-center">保守</th>
+                    <th class="table-light small text-warning text-center">悲觀</th>
                   </tr>
                   <tr>
                     <td class="ps-3 small">出租仲介費</td>
@@ -744,6 +752,9 @@
                       </div>
                     </td>
                     <td><input type="text" class="form-control form-control-sm text-center" value="50%" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-success" id="opBrokerageFeeOpt" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-primary" id="opBrokerageFeeMid" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-warning" id="opBrokerageFeePes" readonly></td>
                   </tr>
                   <tr>
                     <td class="ps-3 small">代管費</td>
@@ -754,17 +765,17 @@
                       </div>
                     </td>
                     <td><input type="text" class="form-control form-control-sm text-center" value="5%" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-success" id="opMgmtFeeOpt" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-primary" id="opMgmtFeeMid" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-warning" id="opMgmtFeePes" readonly></td>
                   </tr>
 
                   <!-- 成本五：營運修繕攤提 -->
                   <tr>
-                    <td rowspan="2" class="align-middle fw-bold ps-3" style="background:#eef5e8">營運修繕攤提</td>
-                    <td rowspan="2" class="align-middle text-center fw-bold" style="background:#eef5e8">
+                    <td rowspan="2" class="align-middle fw-bold ps-3">營運修繕攤提</td>
+                    <td rowspan="2" class="align-middle text-center fw-bold">
                       <span id="opRepairCost">0</span>
                     </td>
-                    <th class="table-light small text-muted fw-normal">營業修繕</th>
-                    <th class="table-light small"></th>
-                    <th class="table-light small text-muted fw-normal">更新年限</th>
                   </tr>
                   <tr>
                     <td class="ps-3 small">修繕更新次數</td>
@@ -775,17 +786,17 @@
                       </div>
                     </td>
                     <td><input type="text" class="form-control form-control-sm text-center" value="0.5" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-success" id="opRepairCountOpt" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-primary" id="opRepairCountMid" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-warning" id="opRepairCountPes" readonly></td>
                   </tr>
 
                   <!-- 成本六：稅務 -->
                   <tr>
-                    <td rowspan="2" class="align-middle fw-bold ps-3" style="background:#d4edda">稅務</td>
-                    <td rowspan="2" class="align-middle text-center fw-bold" style="background:#d4edda">
+                    <td rowspan="2" class="align-middle fw-bold ps-3">稅務</td>
+                    <td rowspan="2" class="align-middle text-center fw-bold">
                       <span id="opTaxCost">0</span>
                     </td>
-                    <th class="table-light small text-muted fw-normal">稅率</th>
-                    <th class="table-light small"></th>
-                    <th class="table-light small"></th>
                   </tr>
                   <tr>
                     <td class="ps-3 small">稅率</td>
@@ -795,9 +806,12 @@
                     <td>
                       <select class="form-select form-select-sm" id="taxType" onchange="updateOpCost()">
                         <option value="0.096">個人戶</option>
-                        <option value="0.10">公司戶</option>
+                        <option value="0.096">公司戶</option>
                       </select>
                     </td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-success" id="opTaxCostOpt" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-primary" id="opTaxCostMid" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-warning" id="opTaxCostPes" readonly></td>
                   </tr>
 
                   <!-- 成本七：其他 -->
@@ -806,9 +820,7 @@
                     <td rowspan="2" class="align-middle text-center fw-bold">
                       <span id="opOtherCost">-</span>
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td></td><td></td><td></td><td></td><td></td><td></td>
                   </tr>
                   <tr>
                     <td class="ps-3 small">保險</td>
@@ -819,6 +831,17 @@
                       </div>
                     </td>
                     <td></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-success" id="opInsuranceOpt" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-primary" id="opInsuranceMid" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center text-warning" id="opInsurancePes" readonly></td>
+                  </tr>
+
+                  <!-- 總計 -->
+                  <tr class="table-secondary fw-bold">
+                    <td colspan="5" class="ps-3 py-2">總計</td>
+                    <td><input type="text" class="form-control form-control-sm text-center fw-bold text-success" id="opTotalOpt" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center fw-bold text-primary" id="opTotalMid" readonly></td>
+                    <td><input type="text" class="form-control form-control-sm text-center fw-bold text-warning" id="opTotalPes" readonly></td>
                   </tr>
                 </tbody>
               </table>
@@ -827,15 +850,56 @@
               <i class="fas fa-triangle-exclamation me-1"></i><strong>開發待辦：</strong>
               <ol class="mb-0 mt-1 ps-3">
                 <li>所有基準由後台統一配置，前端自動帶入，不可手動修改</li>
-                <li>出租仲介費 = 營業收入的預期營業收入 × 基準</li>
-                <li>代管費 = (營業收入的預期營業收入 − 承租條件的月租金) × 基準</li>
-                <li>修繕更新次數 = 營業收入的預期營業收入 × 基準</li>
-                <li>保險：可自行輸入</li>
-                <li>人事費用 = 出租仲介費 / 12 + 代管費</li>
-                <li>營運修繕攤提 = 修繕更新次數 / 12</li>
-                <li>稅務 = 營業收入的預期營業收入 × 稅率</li>
-                <li>其他 = 保險 / 12</li>
+                <li>人事費用（三均）= 出租仲介費 / 12 + 代管費</li>
+                <li>營運修繕攤提（三均）= 修繕更新次數 / 12</li>
+                <li>其他（三均）= 保險 / 12</li>
               </ol>
+              <div class="mt-2">
+                <div class="fw-bold small mb-1">三情境欄（樂觀 / 保守 / 悲觀）各依對應營業收入總計計算：</div>
+                <table class="table table-sm table-bordered small mb-0">
+                  <thead class="table-light">
+                    <tr><th style="width:18%">項目</th><th>樂觀</th><th>保守</th><th>悲觀</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>出租仲介費</td>
+                      <td>樂觀總計 × 50% / 12</td>
+                      <td>保守總計 × 50% / 12</td>
+                      <td>悲觀總計 × 50% / 12</td>
+                    </tr>
+                    <tr>
+                      <td>代管費</td>
+                      <td>(樂觀總計 − 月租金) × 5%</td>
+                      <td>(保守總計 − 月租金) × 5%</td>
+                      <td>(悲觀總計 − 月租金) × 5%</td>
+                    </tr>
+                    <tr>
+                      <td>修繕更新次數</td>
+                      <td>樂觀總計 × 50% / 12</td>
+                      <td>保守總計 × 50% / 12</td>
+                      <td>悲觀總計 × 50% / 12</td>
+                    </tr>
+                    <tr>
+                      <td>稅務（個人戶）</td>
+                      <td>(樂觀總計 − 月租金) × 9.6%</td>
+                      <td>(保守總計 − 月租金) × 9.6%</td>
+                      <td>(悲觀總計 − 月租金) × 9.6%</td>
+                    </tr>
+                    <tr>
+                      <td>稅務（公司戶）</td>
+                      <td>樂觀總計 × 9.6%</td>
+                      <td>保守總計 × 9.6%</td>
+                      <td>悲觀總計 × 9.6%</td>
+                    </tr>
+                    <tr>
+                      <td>保險</td>
+                      <td>其他費用 / 12</td>
+                      <td>其他費用 / 12</td>
+                      <td>其他費用 / 12</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -1140,5 +1204,116 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="script.js"></script>
+
+<!-- 整層住宅：啟動成本預設項目 -->
+<script>
+(function () {
+  const FLOOR_AREA_BIND = 'floorArea';
+
+  const DEFAULT_COST_GROUPS = [
+    {
+      type: 'decoration',
+      items: [
+        { label: '地板工程', qty: FLOOR_AREA_BIND },
+        { label: '油漆工程', qty: 1 }
+      ]
+    },
+    {
+      type: 'cleaning',
+      items: [
+        { label: '車趟', qty: 1 },
+        { label: '粗清', qty: 1 }
+      ]
+    },
+    {
+      type: 'appliance',
+      items: [
+        { label: '軟裝設計', displayLabel: '軟裝設計(整層住宅)', qty: 1 },
+        { label: '軟裝品', qty: 1 },
+        { label: '冷氣-客廳', qty: 1 },
+        { label: '冷氣-房間', qty: 3 },
+        { label: '電冰箱', qty: 1 },
+        { label: '洗衣機', qty: 1 },
+        { label: '電視', qty: 1 },
+        { label: '床組', qty: 3 },
+        { label: '沙發', qty: 1 },
+        { label: '書桌椅', qty: 1 },
+        { label: '瓦斯爐', qty: 1 },
+        { label: '抽油煙機', qty: 1 },
+        { label: '燈具', qty: 1 }
+      ]
+    }
+  ];
+
+  function getFloorQty() {
+    const area = parseFloat(document.getElementById('indoorArea')?.value);
+    return Number.isFinite(area) ? area - 2 : '';
+  }
+
+  function initCostGroups() {
+    const container = document.getElementById('cost-groups');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    DEFAULT_COST_GROUPS.forEach(group => {
+      const opts = COST_SUB_OPTIONS[group.type] || [];
+
+      // 直接呼叫 script.js 的工廠函式，不靠模擬點擊
+      const mainEl = mainGroupTemplate();
+
+      const mainSelect = mainEl.querySelector('.cost-main-select');
+      if (mainSelect) mainSelect.value = group.type;
+
+      // 清掉 mainGroupTemplate 預設加入的空子行
+      const tbody = mainEl.querySelector('.cost-subs');
+      if (tbody) tbody.innerHTML = '';
+
+      group.items.forEach(item => {
+        const row = subRowTemplate(opts);
+        if (tbody) tbody.appendChild(row);
+
+        const sel = row.querySelector('.sub-item-select');
+        if (sel) {
+          const opt = Array.from(sel.options).find(o => o.textContent === item.label);
+          if (opt) {
+            if (item.displayLabel) opt.textContent = item.displayLabel;
+            sel.value = opt.value;
+            const unitText = row.querySelector('.unit-text');
+            if (unitText) unitText.textContent = opt.dataset.unit || '';
+          }
+        }
+
+        const qtyInput = row.querySelector('.qty');
+        if (qtyInput) {
+          if (item.qty === FLOOR_AREA_BIND) {
+            qtyInput.dataset.floorAreaBind = '1';
+            qtyInput.value = getFloorQty();
+          } else {
+            qtyInput.value = item.qty;
+          }
+          qtyInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      });
+
+      container.appendChild(mainEl);
+    });
+  }
+
+  function bindFloorAreaSync() {
+    document.getElementById('indoorArea')?.addEventListener('input', () => {
+      const v = getFloorQty();
+      document.querySelectorAll('[data-floor-area-bind="1"]').forEach(el => {
+        el.value = v;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+      });
+    });
+  }
+
+  // 腳本在 </body> 前，DOM 與 script.js 均已就緒，直接執行
+  initCostGroups();
+  bindFloorAreaSync();
+})();
+</script>
 </body>
 </html>

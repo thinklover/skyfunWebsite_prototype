@@ -134,17 +134,22 @@ document.addEventListener('click', e => {
 
 function recalcExpectedRevenue() {
   const rows = document.querySelectorAll('#rentEstimateTable tbody tr');
-  let total = 0;
+  let totalOpt = 0, totalMid = 0, totalPes = 0;
   rows.forEach(tr => {
     const inputs = tr.querySelectorAll('input[type=number]');
     // inputs[0]=樓層, inputs[1]=樂觀, inputs[2]=保守, inputs[3]=悲觀
-    const opt = parseFloat(inputs[1]?.value) || 0;
-    const mid = parseFloat(inputs[2]?.value) || 0;
-    const pes = parseFloat(inputs[3]?.value) || 0;
-    total += (opt + mid + pes) / 3;
+    totalOpt += parseFloat(inputs[1]?.value) || 0;
+    totalMid += parseFloat(inputs[2]?.value) || 0;
+    totalPes += parseFloat(inputs[3]?.value) || 0;
   });
   const el = document.getElementById('expectedRevenue');
-  if (el) el.value = Math.round(total).toLocaleString();
+  if (el) el.value = Math.round((totalOpt + totalMid + totalPes) / 3).toLocaleString();
+
+  const setSpan = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = Math.round(v).toLocaleString(); };
+  setSpan('rentOptSum', totalOpt);
+  setSpan('rentMidSum', totalMid);
+  setSpan('rentPesSum', totalPes);
+
   updateOpCost();
 }
 
@@ -300,34 +305,62 @@ function updateOpCost() {
     (document.getElementById('expectedRevenue')?.value || '0').replace(/,/g, '')
   ) || 0;
   const rentMonth = parseFloat(document.getElementById('rentMonth')?.value) || 0;
-  const taxRate = parseFloat(document.getElementById('taxType')?.value) || 0.096;
+  const taxRate   = parseFloat(document.getElementById('taxType')?.value) || 0.096;
   const insurance = parseFloat(document.getElementById('insuranceCost')?.value) || 0;
 
-  const brokerageFee = Math.round(expectedRev * 0.5);
-  const mgmtFee     = Math.round((expectedRev - rentMonth) * 0.05);
+  const taxTypeEl = document.getElementById('taxType');
+  const isCompany = taxTypeEl?.selectedOptions[0]?.textContent.trim() === '公司戶';
+
+  const brokerageFee  = Math.round(expectedRev * 0.5);
+  const mgmtFee       = Math.round((expectedRev - rentMonth) * 0.05);
   const personnelCost = Math.round(brokerageFee / 12 + mgmtFee);
+  const repairCount   = Math.round(expectedRev * 0.5);
+  const repairCost    = Math.round(repairCount / 12);
+  const taxBase       = isCompany ? expectedRev : (expectedRev - rentMonth);
+  const taxCost       = Math.round(taxBase * taxRate);
+  const otherCost     = Math.round(insurance / 12);
+  const total         = personnelCost + repairCost + taxCost + otherCost;
 
-  const repairCount = Math.round(expectedRev * 0.5);
-  const repairCost  = Math.round(repairCount / 12);
+  const fmt    = n => n.toLocaleString();
+  const setInp = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  const setSp  = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
 
-  const taxCost   = Math.round(expectedRev * taxRate);
-  const otherCost = Math.round(insurance / 12);
+  setInp('opBrokerageFee',   fmt(brokerageFee));
+  setInp('opMgmtFee',        fmt(mgmtFee));
+  setSp ('opPersonnelCost',  fmt(personnelCost));
+  setInp('opRepairCount',    fmt(repairCount));
+  setSp ('opRepairCost',     fmt(repairCost));
+  setSp ('opTaxCost',        fmt(taxCost));
+  setInp('opTaxRate',        (taxRate * 100).toFixed(1) + '%');
+  setSp ('opOtherCost',      otherCost > 0 ? fmt(otherCost) : '-');
+  setInp('opPersonnelTotal', fmt(total));
 
-  const total = personnelCost + repairCost + taxCost + otherCost;
+  // ── 三情境欄位 ──────────────────────────────────────────
+  function revOf(id) {
+    return parseFloat((document.getElementById(id)?.textContent || '0').replace(/,/g, '')) || 0;
+  }
+  function calc(rev) {
+    const brokerage = Math.round(rev * 0.5 / 12);
+    const mgmt      = Math.round((rev - rentMonth) * 0.05);
+    const repair    = Math.round(rev * 0.5 / 12);
+    const tax       = Math.round((isCompany ? rev : rev - rentMonth) * taxRate);
+    const ins       = Math.round(insurance / 12);
+    return { brokerage, mgmt, repair, tax, ins };
+  }
+  const s = {
+    opt: calc(revOf('rentOptSum')),
+    mid: calc(revOf('rentMidSum')),
+    pes: calc(revOf('rentPesSum'))
+  };
+  [['Opt', s.opt], ['Mid', s.mid], ['Pes', s.pes]].forEach(([sfx, d]) => {
+    setInp('opBrokerageFee' + sfx, fmt(d.brokerage));
+    setInp('opMgmtFee'      + sfx, fmt(d.mgmt));
+    setInp('opRepairCount'  + sfx, fmt(d.repair));
+    setInp('opTaxCost'      + sfx, fmt(d.tax));
+    setInp('opInsurance'    + sfx, fmt(d.ins));
+    setInp('opTotal'        + sfx, fmt(d.brokerage + d.mgmt + d.repair + d.tax + d.ins));
+  });
 
-  const fmt = n => n.toLocaleString();
-  const setInp  = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
-  const setSpan = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-
-  setInp ('opBrokerageFee',  fmt(brokerageFee));
-  setInp ('opMgmtFee',       fmt(mgmtFee));
-  setSpan('opPersonnelCost', fmt(personnelCost));
-  setInp ('opRepairCount',   fmt(repairCount));
-  setSpan('opRepairCost',    fmt(repairCost));
-  setSpan('opTaxCost',       fmt(taxCost));
-  setInp ('opTaxRate',       (taxRate * 100).toFixed(1) + '%');
-  setSpan('opOtherCost',     otherCost > 0 ? fmt(otherCost) : '-');
-  setInp ('opPersonnelTotal', fmt(total));
   updateInvestKeys();
 }
 
