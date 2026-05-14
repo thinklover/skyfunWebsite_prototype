@@ -261,6 +261,7 @@ body {
 .table th { font-weight: 600; color: #344767; background: #f6f7f9; }
 .table-sm > :not(caption) > * > * { padding: 0.4rem 0.5rem; }
 .table-responsive { padding: 1px; }
+.table-bordered tbody tr:last-child > * { border-bottom-width: 0 !important; }
 
 /* Breadcrumb */
 .breadcrumb-item + .breadcrumb-item::before { color: #aaa; }

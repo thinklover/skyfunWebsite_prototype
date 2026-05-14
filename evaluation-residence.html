@@ -490,7 +490,7 @@
               <div class="col-md-2">
                 <label class="form-label">免租期</label>
                 <div class="input-group input-group-sm">
-                  <input type="number" class="form-control" id="freeLeaseMonth" value="0">
+                  <input type="number" class="form-control" id="freeLeaseMonth" value="3">
                   <span class="input-group-text">月</span>
                 </div>
               </div>
@@ -1098,22 +1098,10 @@
             <!-- 投報率詳盡分析（3x3 矩陣） -->
             <div class="mb-3">
               <div class="d-flex justify-content-between align-items-center mb-2">
-                <h6 class="mb-0 fw-bold" style="color:#17408B"><i class="fas fa-table-list me-1"></i>投報率詳盡分析（3×3 情境矩陣）</h6>
-                <div class="d-flex gap-2 align-items-end">
-                  <div>
-                    <label class="form-label small mb-0">投報率門檻</label>
-                    <div class="input-group input-group-sm" style="width:120px">
-                      <input type="number" class="form-control" id="irrThreshold" value="15">
-                      <span class="input-group-text">%</span>
-                    </div>
-                  </div>
-                  <div>
-                    <label class="form-label small mb-0">回本年限上限</label>
-                    <div class="input-group input-group-sm" style="width:120px">
-                      <input type="number" class="form-control" id="paybackThreshold" value="1">
-                      <span class="input-group-text">年</span>
-                    </div>
-                  </div>
+                <h6 class="mb-0 fw-bold" style="color:#17408B"><i class="fas fa-table-list me-1"></i>投報率詳盡分析</h6>
+                <div class="d-flex gap-3 align-items-end small text-muted">
+                  <span>建議回本期：<strong class="text-dark">2 年</strong></span>
+                  <span>建議投報率：<strong class="text-dark">50%</strong></span>
                 </div>
               </div>
 
@@ -1135,52 +1123,57 @@
                       <tbody>
                         <tr>
                           <th class="text-success">樂觀</th>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">0.78 年</div><div class="small text-muted">投報率</div><div>95.6%</div><span class="badge bg-success mt-1">是</span></td>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">0.88 年</div><div class="small text-muted">投報率</div><div>79.4%</div><span class="badge bg-success mt-1">是</span></td>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.01 年</div><div class="small text-muted">投報率</div><div>71.4%</div><span class="badge bg-secondary mt-1">否</span></td>
+                          <td class="matrix-cell" data-rent="opt" data-occ="opt"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
+                          <td class="matrix-cell" data-rent="opt" data-occ="mid"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
+                          <td class="matrix-cell" data-rent="opt" data-occ="pes"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
                         </tr>
                         <tr>
                           <th class="text-primary">保守</th>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">0.92 年</div><div class="small text-muted">投報率</div><div>79.4%</div><span class="badge bg-success mt-1">是</span></td>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.05 年</div><div class="small text-muted">投報率</div><div>68.2%</div><span class="badge bg-secondary mt-1">否</span></td>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.22 年</div><div class="small text-muted">投報率</div><div>56.9%</div><span class="badge bg-secondary mt-1">否</span></td>
+                          <td class="matrix-cell" data-rent="mid" data-occ="opt"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
+                          <td class="matrix-cell" data-rent="mid" data-occ="mid"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
+                          <td class="matrix-cell" data-rent="mid" data-occ="pes"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
                         </tr>
                         <tr>
                           <th class="text-warning">悲觀</th>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.01 年</div><div class="small text-muted">投報率</div><div>79.4%</div><span class="badge bg-secondary mt-1">否</span></td>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.16 年</div><div class="small text-muted">投報率</div><div>68.2%</div><span class="badge bg-secondary mt-1">否</span></td>
-                          <td class="matrix-cell"><div class="small text-muted">回本期</div><div class="fw-bold">1.35 年</div><div class="small text-muted">投報率</div><div>56.9%</div><span class="badge bg-secondary mt-1">否</span></td>
+                          <td class="matrix-cell" data-rent="pes" data-occ="opt"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
+                          <td class="matrix-cell" data-rent="pes" data-occ="mid"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
+                          <td class="matrix-cell" data-rent="pes" data-occ="pes"><div class="small text-muted">回本期</div><div class="fw-bold irr-payback">—</div><div class="small text-muted">年投報率</div><div class="irr-rate">—</div><span class="badge irr-badge mt-1">—</span></td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
-                  <div class="alert alert-light border p-2 small mt-2 mb-0">
-                    <strong>公式：</strong>回本期 = 啟動成本 ÷ (預期租金收入 − 前三年平均收房租金/月 − 營運成本 − 稅額) + 裝潢期 + 招租期限 − 免租期
-                  </div>
                 </div>
 
                 <!-- 評分卡 + 收房底價建議 -->
-                <div class="col-md-3">
-                  <div class="sub-block h-100 text-center">
-                    <div class="sub-block-title">綜合評分</div>
-                    <div class="score-circle mx-auto mb-2">
-                      <span class="score-num" id="totalScore">45</span>
-                      <span class="score-unit">分</span>
-                    </div>
-                    <div class="small text-muted mb-2">60 分以上可承作</div>
-
-                    <div class="text-start mt-3">
-                      <div class="small fw-bold mb-1">評分權重</div>
-                      <div class="d-flex justify-content-between small"><span>啟動成本</span><span>100</span></div>
-                      <div class="d-flex justify-content-between small"><span>淨利</span><span>10</span></div>
-                      <div class="d-flex justify-content-between small"><span>回本</span><span>10</span></div>
-                      <div class="d-flex justify-content-between small"><span>租期</span><span>24</span></div>
-                      <div class="d-flex justify-content-between small"><span>總收入</span><span>240</span></div>
-                      <div class="d-flex justify-content-between small"><span>空置期</span><span>70%</span></div>
-                    </div>
+                <div class="col-md-3 align-self-start">
+                  <div class="sub-block d-flex flex-column align-items-center justify-content-center text-center" style="min-height:120px">
+                    <div class="sub-block-title w-100">綜合評分</div>
+                    <div style="font-size:3rem;font-weight:800;color:#17408B;line-height:1.1"><span id="totalScore">0</span> 分</div>
+                    <div class="small text-muted mt-2">60 分以上可承作</div>
                   </div>
                 </div>
               </div>
+            </div>
+
+          <div class="alert alert-warning py-2 px-3 mb-0 mt-2 small">
+              <i class="fas fa-triangle-exclamation me-1"></i><strong>開發待辦：</strong>投報率詳盡分析計算邏輯（建議回本期：2年，建議投報率：50%）
+              <table class="table table-sm table-bordered small mb-0 mt-2">
+                <thead class="table-light">
+                  <tr><th style="width:14%">情境（租金×空置）</th><th>回本期</th><th>年投報率</th><th>是否投資</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>樂觀×樂觀</td><td>MAX((啟動成本/(樂觀×100%−前五年均租−樂觀營運)+裝潢+招租−免租)/12, 0)</td><td>((樂觀×100%−年均租−樂觀營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>年投報率≥50% 且 回本期≤2年 → 是，否則否</td></tr>
+                  <tr><td>保守×樂觀</td><td>MAX((啟動成本/(樂觀×95%−前五年均租−樂觀營運)+裝潢+招租−免租)/12, 0)</td><td>((樂觀×95%−年均租−樂觀營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>同上</td></tr>
+                  <tr><td>悲觀×樂觀</td><td>MAX((啟動成本/(樂觀×90%−前五年均租−樂觀營運)+裝潢+招租−免租)/12, 0)</td><td>((樂觀×90%−年均租−樂觀營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>同上</td></tr>
+                  <tr><td>樂觀×保守</td><td>MAX((啟動成本/(保守×100%−前五年均租−保守營運)+裝潢+招租−免租)/12, 0)</td><td>((保守×100%−年均租−保守營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>同上</td></tr>
+                  <tr><td>保守×保守</td><td>MAX((啟動成本/(保守×95%−前五年均租−保守營運)+裝潢+招租−免租)/12, 0)</td><td>((保守×95%−年均租−保守營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>同上</td></tr>
+                  <tr><td>悲觀×保守</td><td>MAX((啟動成本/(保守×90%−前五年均租−保守營運)+裝潢+招租−免租)/12, 0)</td><td>((保守×90%−年均租−保守營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>同上</td></tr>
+                  <tr><td>樂觀×悲觀</td><td>MAX((啟動成本/(悲觀×100%−前五年均租−悲觀營運)+裝潢+招租−免租)/12, 0)</td><td>((悲觀×100%−年均租−悲觀營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>同上</td></tr>
+                  <tr><td>保守×悲觀</td><td>MAX((啟動成本/(悲觀×95%−前五年均租−悲觀營運)+裝潢+招租−免租)/12, 0)</td><td>((悲觀×95%−年均租−悲觀營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>同上</td></tr>
+                  <tr><td>悲觀×悲觀</td><td>MAX((啟動成本/(悲觀×90%−前五年均租−悲觀營運)+裝潢+招租−免租)/12, 0)</td><td>((悲觀×90%−年均租−悲觀營運)×(租期×12−MAX(裝潢+招租−免租,0))/啟動成本−1)/租期</td><td>同上</td></tr>
+                  <tr><td colspan="4">每格「是」得15分，總分0~135分</td></tr>
+                </tbody>
+              </table>
             </div>
 
           </div>
@@ -1312,6 +1305,7 @@
 
   // 腳本在 </body> 前，DOM 與 script.js 均已就緒，直接執行
   initCostGroups();
+  updateOpCost();
   bindFloorAreaSync();
 })();
 </script>

@@ -97,6 +97,7 @@ function recalcTotal() {
   });
   const totalEl = document.getElementById('total-cost');
   if (totalEl) totalEl.value = total;
+  updateInvestKeys();
 }
 
 // ============ 樓層詳細資訊：新增列 / 刪除列 ============
@@ -297,7 +298,11 @@ function recalcRentTable() {
 });
 
 // 初始化（若 placeholder 有值，畫面載入時也計算一次）
-document.addEventListener('DOMContentLoaded', recalcRentTable);
+document.addEventListener('DOMContentLoaded', () => {
+  recalcRentTable();
+  updateOpCost();
+  updateInvestKeys();
+});
 
 // ============ 營運成本估算 ============
 function updateOpCost() {
@@ -365,7 +370,6 @@ function updateOpCost() {
 }
 
 document.getElementById('rentMonth')?.addEventListener('input', updateOpCost);
-document.addEventListener('DOMContentLoaded', updateOpCost);
 
 // ============ 投資關鍵指標 ============
 function updateInvestKeys() {
@@ -378,21 +382,21 @@ function updateInvestKeys() {
   setInp('investLeaseYear', leaseYear || '');
   setInp('investFreeMonth', freeMonth !== 0 ? freeMonth : '');
 
-  // 啟動成本 — 直接帶入啟動成本估算
+  // 啟動成本 = 啟動成本估算的預期投入成本總計
   const startCost = parseFloat(document.getElementById('total-cost')?.value) || 0;
   setInp('investStartCost', fmt(startCost));
 
-  // 前五年平均收房租金 / 年平均租金 — 從租金表讀取年租金
-  const annualRents = Array.from(
-    document.querySelectorAll('#rentTableBody .annual-rent')
+  // 前五年平均收房租金 / 年平均租金 — 從租金表讀取月租金
+  const monthlyRents = Array.from(
+    document.querySelectorAll('#rentTableBody .monthly-rent')
   ).map(el => parseFloat((el.value || '0').replace(/,/g, '')) || 0);
 
-  const first5      = annualRents.slice(0, 5);
-  const avg5yRent   = first5.length
-    ? Math.round(first5.reduce((s, v) => s + v, 0) / first5.length / 12)
+  const first5Monthly = monthlyRents.slice(0, 5);
+  const avg5yRent = first5Monthly.length
+    ? Math.round(first5Monthly.reduce((s, v) => s + v, 0) / 5)
     : 0;
-  const avgYearRent = annualRents.length && leaseYear
-    ? Math.round(annualRents.reduce((s, v) => s + v, 0) / leaseYear / 12)
+  const avgYearRent = monthlyRents.length && leaseYear
+    ? Math.round(monthlyRents.reduce((s, v) => s + v, 0) / leaseYear)
     : 0;
   setInp('avg5yRent',   fmt(avg5yRent));
   setInp('avgYearRent', fmt(avgYearRent));
@@ -416,13 +420,91 @@ function updateInvestKeys() {
   // 營業淨利 = 價差 − 營業成本
   const netProfit = spread - opCost;
   setInp('bizNetProfit', fmt(netProfit));
+
+  updateIrrMatrix();
 }
 
 // 承租條件變動時同步更新指標
-['leaseYear', 'freeLeaseMonth'].forEach(id => {
+['leaseYear', 'freeLeaseMonth', 'investAdMonth', 'investDecoMonth'].forEach(id => {
   document.getElementById(id)?.addEventListener('input', updateInvestKeys);
 });
-document.addEventListener('DOMContentLoaded', updateInvestKeys);
+
+// ============ 投報率詳盡分析（3×3 矩陣） ============
+function updateIrrMatrix() {
+  const getNum = id => parseFloat((document.getElementById(id)?.value || '0').replace(/,/g, '')) || 0;
+  const getSpanNum = id => parseFloat((document.getElementById(id)?.textContent || '0').replace(/,/g, '')) || 0;
+
+  const startCost  = getNum('investStartCost');
+  const avg5yRent  = getNum('avg5yRent');       // 月均（前五年）
+  const avgYearRent = getNum('avgYearRent');    // 月均（全租期）
+  const leaseYear  = parseInt(document.getElementById('leaseYear')?.value) || 0;
+  const freeMonth  = parseFloat(document.getElementById('freeLeaseMonth')?.value) || 0;
+  const decoMonth  = parseFloat(document.getElementById('investDecoMonth')?.value) || 0;
+  const adMonth    = parseFloat(document.getElementById('investAdMonth')?.value) || 0;
+
+  const revOpt = getSpanNum('rentOptSum');
+  const revMid = getSpanNum('rentMidSum');
+  const revPes = getSpanNum('rentPesSum');
+
+  const opOpt = parseFloat((document.getElementById('opTotalOpt')?.value || '0').replace(/,/g, '')) || 0;
+  const opMid = parseFloat((document.getElementById('opTotalMid')?.value || '0').replace(/,/g, '')) || 0;
+  const opPes = parseFloat((document.getElementById('opTotalPes')?.value || '0').replace(/,/g, '')) || 0;
+
+  const OCC = { opt: 1.0, mid: 0.95, pes: 0.90 };
+  const REV = { opt: revOpt, mid: revMid, pes: revPes };
+  const OP  = { opt: opOpt, mid: opMid, pes: opPes };
+
+  const SUGGEST_PAYBACK = 2;   // 年
+  const SUGGEST_IRR     = 0.50;
+
+  const leaseMon = leaseYear * 12;
+  const waitMon  = Math.max(decoMonth + adMonth - freeMonth, 0);
+
+  let score = 0;
+
+  document.querySelectorAll('#irrMatrix .matrix-cell').forEach(cell => {
+    const rent = cell.dataset.rent;
+    const occ  = cell.dataset.occ;
+    if (!rent || !occ) return;
+
+    const rev    = REV[rent] * OCC[occ];   // 月收入（情境）
+    const opCost = OP[rent];               // 月營運成本（對應租金情境）
+    const net    = rev - avg5yRent - opCost;
+
+    let paybackYr;
+    if (net <= 0) {
+      paybackYr = 0;
+    } else if (startCost <= 0) {
+      paybackYr = 0;
+    } else {
+      const raw = (startCost / net + decoMonth + adMonth - freeMonth) / 12;
+      paybackYr = Math.max(raw, 0);
+    }
+
+    // 年投報率
+    let irrRate = 0;
+    if (startCost > 0 && leaseYear > 0) {
+      const netForIrr = REV[rent] * OCC[occ] - avgYearRent - OP[rent];
+      irrRate = (((netForIrr * (leaseMon - waitMon)) / startCost) - 1) / leaseYear;
+    }
+
+    const invest = startCost > 0 && irrRate >= SUGGEST_IRR && paybackYr <= SUGGEST_PAYBACK;
+    if (invest) score += 15;
+
+    cell.querySelector('.irr-payback').textContent =
+      paybackYr === 0 ? '0 年' : paybackYr.toFixed(2) + ' 年';
+    cell.querySelector('.irr-rate').textContent =
+      isFinite(irrRate) ? (irrRate * 100).toFixed(1) + '%' : '—';
+    const badge = cell.querySelector('.irr-badge');
+    if (badge) {
+      badge.textContent = invest ? '是' : '否';
+      badge.className = 'badge mt-1 ' + (invest ? 'bg-success' : 'bg-secondary');
+    }
+  });
+
+  const scoreEl = document.getElementById('totalScore');
+  if (scoreEl) scoreEl.textContent = score;
+}
 
 // ============ 成本主項：選擇主項時，子項下拉自動帶入對應選項 ============
 const COST_SUB_OPTIONS = {
