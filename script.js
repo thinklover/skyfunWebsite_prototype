@@ -302,9 +302,11 @@ document.addEventListener('DOMContentLoaded', () => {
   recalcRentTable();
   updateOpCost();
   updateInvestKeys();
-});
 
-// ============ 營運成本估算 ============
+  ['leaseYear', 'freeLeaseMonth', 'investAdMonth', 'investDecoMonth'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', updateInvestKeys);
+  });
+});
 function updateOpCost() {
   const expectedRev = parseFloat(
     (document.getElementById('expectedRevenue')?.value || '0').replace(/,/g, '')
@@ -424,19 +426,16 @@ function updateInvestKeys() {
   updateIrrMatrix();
 }
 
-// 承租條件變動時同步更新指標
-['leaseYear', 'freeLeaseMonth', 'investAdMonth', 'investDecoMonth'].forEach(id => {
-  document.getElementById(id)?.addEventListener('input', updateInvestKeys);
-});
-
 // ============ 投報率詳盡分析（3×3 矩陣） ============
 function updateIrrMatrix() {
   const getNum = id => parseFloat((document.getElementById(id)?.value || '0').replace(/,/g, '')) || 0;
   const getSpanNum = id => parseFloat((document.getElementById(id)?.textContent || '0').replace(/,/g, '')) || 0;
 
   const startCost  = getNum('investStartCost');
-  const avg5yRent  = getNum('avg5yRent');       // 月均（前五年）
-  const avgYearRent = getNum('avgYearRent');    // 月均（全租期）
+  const avg5yRent  = getNum('avg5yRent');
+  const avgYearRent = getNum('avgYearRent');
+  const rentMonth  = parseFloat(document.getElementById('rentMonth')?.value) || 0;
+  const taxRate    = parseFloat(document.getElementById('taxType')?.value) || 0.096;
   const leaseYear  = parseInt(document.getElementById('leaseYear')?.value) || 0;
   const freeMonth  = parseFloat(document.getElementById('freeLeaseMonth')?.value) || 0;
   const decoMonth  = parseFloat(document.getElementById('investDecoMonth')?.value) || 0;
@@ -507,6 +506,68 @@ function updateIrrMatrix() {
 
   const scoreEl = document.getElementById('totalScore');
   if (scoreEl) scoreEl.textContent = score;
+
+  // 收房底價：若 score < 60，二分搜尋找讓 score >= 60 的最高 avg5yRent（房東租金上限）
+  const floorPriceEl = document.getElementById('floorPriceBlock');
+  if (!floorPriceEl) return;
+
+  if (score >= 60) {
+    floorPriceEl.style.display = 'none';
+    return;
+  }
+
+  function calcScoreWithRent(testRentMonth) {
+    // 精確計算 testRentMonth 對應的 avg5yRent / avgYearRent
+    const everyN = parseInt(document.getElementById('rentRaiseYear')?.value) || 0;
+    const mode   = document.querySelector('input[name="raiseMode"]:checked')?.value || 'percent';
+    const pct    = parseFloat(document.getElementById('rentRaisePct')?.value) || 0;
+    const amt    = parseFloat(document.getElementById('rentRaiseAmt')?.value) || 0;
+    let cur = testRentMonth, monthly = [];
+    for (let y = 1; y <= leaseYear; y++) {
+      if (y > 1 && everyN > 0 && y % everyN === 0)
+        cur = mode === 'percent' ? Math.round(cur * (1 + pct / 100)) : cur + amt;
+      monthly.push(cur);
+    }
+    const testAvg5y  = monthly.length ? Math.round(monthly.slice(0,5).reduce((s,v)=>s+v,0) / Math.min(5, monthly.length)) : 0;
+    const testAvgYear = monthly.length && leaseYear ? Math.round(monthly.reduce((s,v)=>s+v,0) / leaseYear) : 0;
+
+    function calcOp(rev) {
+      return Math.round(rev * 0.5 / 12)
+           + Math.round((rev - testRentMonth) * 0.05)
+           + Math.round(rev * 0.5 / 12)
+           + Math.round((rev - testRentMonth) * taxRate);
+    }
+    const testOP = { opt: calcOp(revOpt), mid: calcOp(revMid), pes: calcOp(revPes) };
+
+    let s = 0;
+    [['opt',revOpt],['mid',revMid],['pes',revPes]].forEach(([rentKey, rev]) => {
+      [1.0, 0.95, 0.90].forEach(occRate => {
+        const net = rev * occRate - testAvg5y - testOP[rentKey];
+        let paybackYr = 0;
+        if (net > 0 && startCost > 0)
+          paybackYr = Math.max((startCost / net + decoMonth + adMonth - freeMonth) / 12, 0);
+        let irrRate = 0;
+        if (startCost > 0 && leaseYear > 0)
+          irrRate = (((rev * occRate - testAvgYear - testOP[rentKey]) * (leaseMon - waitMon)) / startCost - 1) / leaseYear;
+        const irrDisplay = parseFloat((irrRate * 100).toFixed(1));
+        const paybackDisplay = parseFloat(paybackYr.toFixed(2));
+        if (paybackDisplay > 0 && paybackDisplay <= SUGGEST_PAYBACK && irrDisplay >= SUGGEST_IRR * 100) s += 15;
+      });
+    });
+    return s;
+  }
+
+  // 二分搜尋：找最高的 rentMonth 使 score >= 60
+  let lo = 0, hi = rentMonth;
+  for (let i = 0; i < 60; i++) {
+    const mid2 = (lo + hi) / 2;
+    if (calcScoreWithRent(mid2) >= 60) lo = mid2; else hi = mid2;
+  }
+
+  const floorPrice = Math.floor(lo);
+  document.getElementById('floorPriceVal').textContent =
+    floorPrice > 0 ? floorPrice.toLocaleString() + ' 元/月' : '—';
+  floorPriceEl.style.display = '';
 }
 
 // ============ 成本主項：選擇主項時，子項下拉自動帶入對應選項 ============
