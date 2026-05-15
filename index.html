@@ -220,6 +220,16 @@
         <!-- ====== 篩選條件 ====== -->
         <div class="row g-3 mb-3">
           <div class="col-md-3">
+            <label class="form-label">評估類型</label>
+            <select class="form-select form-select-sm">
+              <option value="">請選擇</option>
+              <option>整層住宅</option>
+              <option>隔套</option>
+              <option>旅館/日租</option>
+              <option>商務中心</option>
+            </select>
+          </div>
+          <div class="col-md-3">
             <label class="form-label">房型</label>
             <select class="form-select form-select-sm">
               <option value="">請選擇</option>
@@ -242,7 +252,7 @@
             </select>
           </div>
           <div class="col-md-3">
-            <label class="form-label">鄉鎮市區</label>
+            <label class="form-label">鄉鎮地區</label>
             <select class="form-select form-select-sm">
               <option value="">請選擇</option>
             </select>
@@ -255,27 +265,6 @@
               <option>新建案(10年內)</option>
               <option>電梯大樓</option>
             </select>
-          </div>
-
-          <div class="col-md-3">
-            <label class="form-label">詳細地址</label>
-            <input type="text" class="form-control form-control-sm" placeholder="請輸入地址關鍵字">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">租期</label>
-            <input type="text" class="form-control form-control-sm" placeholder="請輸入租期">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">評估結果</label>
-            <select class="form-select form-select-sm">
-              <option value="">請選擇</option>
-              <option>承作</option>
-              <option>不承作</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">建立日期</label>
-            <input type="date" class="form-control form-control-sm">
           </div>
         </div>
 
@@ -344,22 +333,20 @@
             <thead class="table-light">
               <tr>
                 <th style="width:40px"><input type="checkbox"></th>
-                <th>案件類型</th>
+                <th>評估類型</th>
                 <th>房型</th>
                 <th>縣市</th>
-                <th>鄉鎮市區</th>
-                <th>詳細地址</th>
+                <th>鄉鎮地區</th>
                 <th>房屋型態</th>
+                <th>月租金</th>
                 <th>租期</th>
-                <th>評估結果</th>
-                <th>預期投報率</th>
-                <th>評估版本</th>
-                <th>備註</th>
+                <th>免租期</th>
+                <th>綜合評分</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td colspan="12" class="text-center text-muted py-4">請按下「查詢物件評估資料」按鈕來載入資料</td>
+                <td colspan="10" class="text-center text-muted py-4">請按下「查詢物件評估資料」按鈕來載入資料</td>
               </tr>
             </tbody>
           </table>
